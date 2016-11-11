@@ -1,0 +1,13 @@
+echo $1 >&2
+url=$( ./googler --json "$1 bgg" | python jsoner )
+echo -n "<a href=\"$url\" > $1 </a> Categories: " >/tmp/ggg
+#curl $url >/tmp/tmp.html
+#echo $url
+id=$(echo $url|cut -d "/" -f 5)
+#echo $id
+#cat /tmp/ggg
+curl -s http://www.boardgamegeek.com/xmlapi/boardgame/$id > /tmp/tmp.html
+xpath -q -e "//boardgamecategory/text()"  /tmp/tmp.html|while read a; do echo -n "$a," >>/tmp/ggg;done
+echo -n "Mechanics: " >>/tmp/ggg
+xpath -q -e "//boardgamemechanic/text()"  /tmp/tmp.html|while read a; do echo -n "$a," >>/tmp/ggg;done
+cat /tmp/ggg

@@ -1,0 +1,2 @@
+rm a.html;cat input |while read a;do bash bgger $a >>a.html echo "</br>">>a.html ;done
+

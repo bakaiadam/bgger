@@ -1,0 +1,4 @@
+import sys
+import urllib
+import json
+print json.load(sys.stdin )[0]["url"]
